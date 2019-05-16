@@ -25,9 +25,16 @@ RUN wget https://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-
 ADD include/fastme-2.1.5-linux64 /usr/bin/fastme
 
 RUN wget https://github.com/davidemms/OrthoFinder/releases/download/2.3.3/OrthoFinder-2.3.3.tar.gz \
-&& tar xzf OrthoFinder-2.3.3.tar.gz 
+&& tar xzf OrthoFinder-2.3.3.tar.gz  && ln -s /OrthoFinder-2.3.3/orthofinder /usr/local/bin
 
 RUN wget https://mafft.cbrc.jp/alignment/software/mafft_7.427-1_amd64.deb \
 && dpkg -i mafft_7.427-1_amd64.deb
 
+
+##### For Transdecoder
+RUN apt-get install -y cpanminus
+RUN cpanm URI::Escape
+RUN apt-get install -y hmmer
+RUN wget https://github.com/TransDecoder/TransDecoder/archive/TransDecoder-v5.5.0.tar.gz \
+&& tar xaf TransDecoder-v5.5.0.tar.gz 
 
