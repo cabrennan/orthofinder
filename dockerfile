@@ -14,7 +14,9 @@ RUN cpanm URI::Escape
 RUN apt-get install -y hmmer
 RUN apt-get install -y mcl
 RUN apt-get install -y ncbi-blast+
-ADD include/fastme-2.1.5-linux64 /usr/bin/fastme
+ADD include/fastme-2.1.5-linux64 /usr/local/bin/fastme
+ADD include/*.pl /usr/local/bin/
+ADD include/*sh /usr/local/bin/
 
 WORKDIR /usr/local/src
 RUN wget https://github.com/soedinglab/MMseqs2/releases/download/3-be8f6/MMseqs2-Linux-AVX2.tar.gz \ 
