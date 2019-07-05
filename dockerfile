@@ -10,15 +10,26 @@ MAINTAINER christinebrennan@whitney.ufl.edu
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get install -y git build-essential libreadline-dev wget vim cpanminus \
 python3 python3-pip git cmake
+ENV PACKAGES make gcc g++ unzip python-pip python-dev libatlas-base-dev gfortran
+RUN apt-get update -y
+RUN apt-get install -y ${PACKAGES}
+
 RUN cpanm URI::Escape
 RUN apt-get install -y hmmer
 RUN apt-get install -y mcl
 RUN apt-get install -y ncbi-blast+
+RUN pip install numpy
+RUN pip install scipy
 ADD include/fastme-2.1.5-linux64 /usr/local/bin/fastme
 ADD include/*.pl /usr/local/bin/
 ADD include/*sh /usr/local/bin/
 
+
 WORKDIR /usr/local/src
+RUN wget -P /usr/local/bin http://www.microbesonline.org/fasttree/FastTree && \
+  chmod a+x /usr/local/bin/FastTree
+
+
 RUN wget https://github.com/soedinglab/MMseqs2/releases/download/3-be8f6/MMseqs2-Linux-AVX2.tar.gz \ 
 && tar xzf MMseqs2-Linux-AVX2.tar.gz \
 && ln -s /usr/local/src/mmseqs2/bin/mmseqs /usr/local/bin
